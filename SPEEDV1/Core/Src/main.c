@@ -23,23 +23,19 @@
 /* USER CODE BEGIN Includes */
 #include <stdlib.h>
 #include <stdio.h>
-volatile int count;
-int countPrev = 0;
-int counter;
-float v1;
-float e;
-float N = 13; //N = 13 * 25 / 10 gear reduction
-int dir = 0;
-float vt = 100;
+int count;
+volatile uint32_t time = 0 ;
+uint32_t prevT= 0;
+int posPrev = 0;
+int speedd;
+float vt;
 float v1Filt = 0;
+float v1FiltAc = 0;
 float v1Prev = 0;
-int pwr = 0;
-char transchar[10];
-float kp = 1;
-float ki = 10;
-float eIntergral = 0;
-int u = 0;
-int pos = 0;
+float v1PrevAc=0;
+float eintergral;
+char transchar[20];
+float deltaT;
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -87,37 +83,15 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		else count--;
 	}
 
-	if (count > 12 || count < -12) count = 0;
   /* NOTE: This function Should not be modified, when the callback is needed,
            the HAL_GPIO_EXTI_Callback could be implemented in the user file
    */
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-	 pos = count - countPrev;
-	if (dir == 1 && pos > N / 2) pos += N;
-	if (dir == -1)
-	{
-		if (pos < -N / 2) pos -= N;
-		pos = -pos;
-	}
-	v1 = (pos) / (13 * 60 * 1000);
-	v1Filt = 0.854 * v1Filt + 0.0728 * v1 + 0.0728 * v1Prev;
-	countPrev = count;
-	v1Prev = v1;
-	counter ++;
+	time+=10;
 }
 
-void calculateSpeedPID ()
-{
-	e = vt - v1Filt;
-	eIntergral += e;
-	u = kp * e + ki * eIntergral;
-	if(u < 0) dir = 1;
-	else dir = -1;
-	pwr = abs(u);
-	if(pwr > 100) pwr = 100;
-}
 
 void ControlMotor(int ChannelA, int ChannelB){
 	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_3, 100-ChannelA);
@@ -179,8 +153,42 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  calculateSpeedPID();
-	  setMotor(dir, pwr);
+	  int pos = 0;
+	  		pos = count;
+
+	  		uint32_t currT = time;
+
+	  		deltaT = ((currT-prevT))/1.0e6;
+	  		float veloc = (pos - posPrev)/deltaT;
+	  		posPrev = pos;
+	  		prevT = currT;
+	  		float actualv = veloc/13*60;
+	  		float v1 = veloc/650*60;
+	  		v1Filt = 0.854*v1Filt + 0.0728*v1 + 0.0728*v1Prev;
+	  		v1FiltAc = 0.854*v1FiltAc + 0.0728*actualv + 0.0728*v1PrevAc;
+	  		v1Prev = v1;
+	  		v1PrevAc = actualv;
+	  		float vt = 100; //*50 imaginary value ~ 5000rpm
+
+	  		// PI function
+	  		float kp = 1;
+	  		float ki = 10;
+	  		float e = vt-v1Filt;
+	  		eintergral += e*deltaT;
+	  		int u = kp*e+ki*eintergral;
+
+	  			int dir = -1;
+	  			if(u<0){
+	  				dir = 1;
+	  			}
+	  			int pwr = abs(u);
+	  			if(pwr > 100){
+	  				pwr = 100;
+	  			}
+	  			setMotor(dir,pwr);
+	  			int v1Filt1 = (float)veloc;
+	  			sprintf(transchar,"%d \r\n",v1Filt1);
+	  			HAL_UART_Transmit(&huart1,(uint8_t*)transchar,sizeof(transchar),1000);
 
     /* USER CODE END WHILE */
 
@@ -312,7 +320,7 @@ static void MX_TIM3_Init(void)
   htim3.Instance = TIM3;
   htim3.Init.Prescaler = 72-1;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 1000-1;
+  htim3.Init.Period = 10-1;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim3) != HAL_OK)

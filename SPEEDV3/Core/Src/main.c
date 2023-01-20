@@ -23,6 +23,7 @@
 /* USER CODE BEGIN Includes */
 #include <stdlib.h>
 volatile int  count;
+volatile int  counter;
 int pos ;
 float N = 13;
 int precount;
@@ -30,12 +31,12 @@ float veloc;
 float v1;
 float v1Filt;
 float v1Prev;
-int vt = 6000;
+int vt = 100;
 float e ;
 float eI;
 int u;
-float kp = 8;
-float ki =1;
+float kp = 1;
+float ki = 10;
 int dir;
 int pwr;
 /* USER CODE END Includes */
@@ -79,31 +80,29 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		if (HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10) == 0) count++;
 		else count--;
 	}
-	if (count > 12 || count < -12) count = 0;
+	//if (count > 12 || count < -12) count = 0;
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-	pos = count - precount;
-	if (dir == 1 && pos > N / 2) pos += N;
-	if (dir == -1)
-	{
-		if (pos < -N / 2) pos -= N;
-		pos = -pos;
-	}
-	veloc = pos / 0.001;
+	counter = count;
+	pos = counter - precount;
+//	if (dir == 1 && pos > N / 2) pos += N;
+//	if (dir == -1)
+//	{
+//		if (pos < -N / 2) pos -= N;
+//		pos = -pos;
+//	}
+	veloc = pos / 0.02;
 	v1 = (veloc) / (13) * 60;
 	v1Filt = 0.854 * v1Filt + 0.0728 * v1 + 0.0728 * v1Prev;
 	v1Prev = v1;
-	precount = count;
+	precount = counter;
+
 }
 void calculateSpeedPID ()
 {
-	veloc = pos / 0.001;
-	v1 = (veloc) / (13) * 60;
-	v1Filt = 0.854 * v1Filt + 0.0728 * v1 + 0.0728 * v1Prev;
-	v1Prev = v1;
 	e = vt - v1Filt;
-	eI += e*0.001;
+	eI += e * 0.02;
 	u = kp * e + ki * eI;
 	if(u < 0) dir = 1;
 	else dir = -1;
@@ -171,7 +170,7 @@ int main(void)
   {
     /* USER CODE END WHILE */
 	  calculateSpeedPID();
-	  setMotor(dir,pwr);
+	  setMotor(dir, pwr);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -300,7 +299,7 @@ static void MX_TIM3_Init(void)
   htim3.Instance = TIM3;
   htim3.Init.Prescaler = 72-1;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 1000-1;
+  htim3.Init.Period = 20000-1;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
