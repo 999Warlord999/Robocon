@@ -23,20 +23,20 @@
 /* USER CODE BEGIN Includes */
 #include <stdlib.h>
 volatile int  count;
-volatile int  counter;
-int pos ;
+long counter;
+long pos ;
 float N = 13;
-int precount;
+long precount;
 float veloc;
 float v1;
 float v1Filt;
 float v1Prev;
-int vt = 100;
+int vt = 5;
 float e ;
 float eI;
 int u;
 float kp = 1;
-float ki = 10;
+float ki = 0.05;
 int dir;
 int pwr;
 /* USER CODE END Includes */
@@ -92,8 +92,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 //		if (pos < -N / 2) pos -= N;
 //		pos = -pos;
 //	}
-	veloc = pos / 0.02;
-	v1 = (veloc) / (13) * 60;
+	veloc = pos / 0.002;
+	v1 = (veloc) / (650) * 60;
 	v1Filt = 0.854 * v1Filt + 0.0728 * v1 + 0.0728 * v1Prev;
 	v1Prev = v1;
 	precount = counter;
@@ -102,8 +102,15 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 void calculateSpeedPID ()
 {
 	e = vt - v1Filt;
-	eI += e * 0.02;
+	eI +=e * 0.002;
+//	if (eI>80000){
+//			eI = 80000;
+//		}
+//	else if(eI<-80000){
+//		eI = -80000;
+//	}
 	u = kp * e + ki * eI;
+
 	if(u < 0) dir = 1;
 	else dir = -1;
 	pwr = abs(u);
@@ -116,15 +123,18 @@ void ControlMotor(int ChannelA, int ChannelB){
 
 void setMotor(int dir , int pwmVal){
 //	pwmVal = 100-pwmVal;
-  if (dir == 1){
-	  ControlMotor(0, pwmVal);
-  }
-  if (dir == -1){
-	  ControlMotor(pwmVal, 0);
-  }
-  else{
-	  ControlMotor(0, 0);
-  }
+	if (dir == 1){
+		  __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_3, pwmVal);
+		  __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, 0);
+	  }
+	else if (dir == -1){
+		  __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_3, 0);
+		  __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, pwmVal);
+	  }
+	  else{
+		  __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_3, 0);
+		  __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, 0);
+	  }
 }
 /* USER CODE END 0 */
 
@@ -299,7 +309,7 @@ static void MX_TIM3_Init(void)
   htim3.Instance = TIM3;
   htim3.Init.Prescaler = 72-1;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 20000-1;
+  htim3.Init.Period = 2000-1;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
