@@ -1,21 +1,84 @@
-21:35:55 **** Incremental Build of configuration Debug for project SPEEDV3 ****
-make -j16 all 
+15:06:06 **** Incremental Build of configuration Debug for project SPEEDV3 ****
+make -j8 all 
 arm-none-eabi-size   SPEEDV3.elf 
    text	   data	    bss	    dec	    hex	filename
-  13320	     32	   1768	  15120	   3b10	SPEEDV3.elf
+  13032	     32	   1768	  14832	   39f0	SPEEDV3.elf
 Finished building: default.size.stdout
  
-21:35:57 **** Incremental Build of configuration Debug for project SPEEDV3 ****
-make -j16 all 
+15:06:10 **** Incremental Build of configuration Debug for project SPEEDV3 ****
+make -j8 all 
 arm-none-eabi-size   SPEEDV3.elf 
    text	   data	    bss	    dec	    hex	filename
-  13320	     32	   1768	  15120	   3b10	SPEEDV3.elf
+  13032	     32	   1768	  14832	   39f0	SPEEDV3.elf
 Finished building: default.size.stdout
  
-21:36:40 **** Incremental Build of configuration Debug for project SPEEDV3 ****
-make -j16 all 
+15:07:05 **** Incremental Build of configuration Debug for project SPEEDV3 ****
+make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "SPEEDV3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\LENOVO\Desktop\Robocon\SPEEDV3\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPEEDV3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+arm-none-eabi-gcc -o "SPEEDV3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\ADMIN\Desktop\Robocon\SPEEDV3\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPEEDV3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: SPEEDV3.elf
+ 
+arm-none-eabi-size   SPEEDV3.elf 
+arm-none-eabi-objdump -h -S  SPEEDV3.elf  > "SPEEDV3.list"
+   text	   data	    bss	    dec	    hex	filename
+  13032	     32	   1768	  14832	   39f0	SPEEDV3.elf
+Finished building: default.size.stdout
+ 
+Finished building: SPEEDV3.list
+ 
+15:08:43 **** Incremental Build of configuration Debug for project SPEEDV3 ****
+make -j8 all 
+arm-none-eabi-size   SPEEDV3.elf 
+   text	   data	    bss	    dec	    hex	filename
+  13032	     32	   1768	  14832	   39f0	SPEEDV3.elf
+Finished building: default.size.stdout
+ 
+15:10:43 **** Incremental Build of configuration Debug for project SPEEDV3 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "SPEEDV3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\ADMIN\Desktop\Robocon\SPEEDV3\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPEEDV3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: SPEEDV3.elf
+ 
+arm-none-eabi-size   SPEEDV3.elf 
+arm-none-eabi-objdump -h -S  SPEEDV3.elf  > "SPEEDV3.list"
+   text	   data	    bss	    dec	    hex	filename
+  13792	     36	   1764	  15592	   3ce8	SPEEDV3.elf
+Finished building: default.size.stdout
+ 
+Finished building: SPEEDV3.list
+ 
+15:14:59 **** Incremental Build of configuration Debug for project SPEEDV3 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "SPEEDV3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\ADMIN\Desktop\Robocon\SPEEDV3\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPEEDV3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: SPEEDV3.elf
+ 
+arm-none-eabi-size   SPEEDV3.elf 
+arm-none-eabi-objdump -h -S  SPEEDV3.elf  > "SPEEDV3.list"
+   text	   data	    bss	    dec	    hex	filename
+  13680	     36	   1764	  15480	   3c78	SPEEDV3.elf
+Finished building: default.size.stdout
+ 
+Finished building: SPEEDV3.list
+ 
+15:17:46 **** Incremental Build of configuration Debug for project SPEEDV3 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "SPEEDV3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\ADMIN\Desktop\Robocon\SPEEDV3\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPEEDV3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: SPEEDV3.elf
+ 
+arm-none-eabi-size   SPEEDV3.elf 
+arm-none-eabi-objdump -h -S  SPEEDV3.elf  > "SPEEDV3.list"
+   text	   data	    bss	    dec	    hex	filename
+  13768	     36	   1764	  15568	   3cd0	SPEEDV3.elf
+Finished building: default.size.stdout
+ 
+Finished building: SPEEDV3.list
+ 
+15:20:01 **** Incremental Build of configuration Debug for project SPEEDV3 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "SPEEDV3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\ADMIN\Desktop\Robocon\SPEEDV3\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPEEDV3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: SPEEDV3.elf
  
 arm-none-eabi-size   SPEEDV3.elf 
@@ -26,10 +89,24 @@ Finished building: default.size.stdout
  
 Finished building: SPEEDV3.list
  
-21:37:40 **** Incremental Build of configuration Debug for project SPEEDV3 ****
-make -j16 all 
+15:21:27 **** Incremental Build of configuration Debug for project SPEEDV3 ****
+make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "SPEEDV3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\LENOVO\Desktop\Robocon\SPEEDV3\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPEEDV3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+arm-none-eabi-gcc -o "SPEEDV3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\ADMIN\Desktop\Robocon\SPEEDV3\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPEEDV3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: SPEEDV3.elf
+ 
+arm-none-eabi-size   SPEEDV3.elf 
+arm-none-eabi-objdump -h -S  SPEEDV3.elf  > "SPEEDV3.list"
+   text	   data	    bss	    dec	    hex	filename
+  13032	     32	   1768	  14832	   39f0	SPEEDV3.elf
+Finished building: default.size.stdout
+ 
+Finished building: SPEEDV3.list
+ 
+15:24:13 **** Incremental Build of configuration Debug for project SPEEDV3 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "SPEEDV3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\ADMIN\Desktop\Robocon\SPEEDV3\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPEEDV3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: SPEEDV3.elf
  
 arm-none-eabi-size   SPEEDV3.elf 
@@ -40,17 +117,24 @@ Finished building: default.size.stdout
  
 Finished building: SPEEDV3.list
  
-21:38:05 **** Incremental Build of configuration Debug for project SPEEDV3 ****
-make -j16 all 
+15:25:05 **** Incremental Build of configuration Debug for project SPEEDV3 ****
+make -j8 all 
 arm-none-eabi-size   SPEEDV3.elf 
    text	   data	    bss	    dec	    hex	filename
   13320	     32	   1768	  15120	   3b10	SPEEDV3.elf
 Finished building: default.size.stdout
  
-21:39:23 **** Incremental Build of configuration Debug for project SPEEDV3 ****
-make -j16 all 
+15:25:29 **** Incremental Build of configuration Debug for project SPEEDV3 ****
+make -j8 all 
+arm-none-eabi-size   SPEEDV3.elf 
+   text	   data	    bss	    dec	    hex	filename
+  13320	     32	   1768	  15120	   3b10	SPEEDV3.elf
+Finished building: default.size.stdout
+ 
+15:26:18 **** Incremental Build of configuration Debug for project SPEEDV3 ****
+make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "SPEEDV3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\LENOVO\Desktop\Robocon\SPEEDV3\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPEEDV3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+arm-none-eabi-gcc -o "SPEEDV3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\ADMIN\Desktop\Robocon\SPEEDV3\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPEEDV3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: SPEEDV3.elf
  
 arm-none-eabi-size   SPEEDV3.elf 
@@ -61,10 +145,10 @@ Finished building: default.size.stdout
  
 Finished building: SPEEDV3.list
  
-21:40:37 **** Incremental Build of configuration Debug for project SPEEDV3 ****
-make -j16 all 
+15:32:12 **** Incremental Build of configuration Debug for project SPEEDV3 ****
+make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "SPEEDV3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\LENOVO\Desktop\Robocon\SPEEDV3\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPEEDV3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+arm-none-eabi-gcc -o "SPEEDV3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\ADMIN\Desktop\Robocon\SPEEDV3\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPEEDV3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: SPEEDV3.elf
  
 arm-none-eabi-size   SPEEDV3.elf 
@@ -75,72 +159,44 @@ Finished building: default.size.stdout
  
 Finished building: SPEEDV3.list
  
-21:41:12 **** Incremental Build of configuration Debug for project SPEEDV3 ****
-make -j16 all 
+15:37:18 **** Incremental Build of configuration Debug for project SPEEDV3 ****
+make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "SPEEDV3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\LENOVO\Desktop\Robocon\SPEEDV3\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPEEDV3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+arm-none-eabi-gcc -o "SPEEDV3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\ADMIN\Desktop\Robocon\SPEEDV3\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPEEDV3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: SPEEDV3.elf
  
 arm-none-eabi-size   SPEEDV3.elf 
 arm-none-eabi-objdump -h -S  SPEEDV3.elf  > "SPEEDV3.list"
    text	   data	    bss	    dec	    hex	filename
-  13320	     32	   1768	  15120	   3b10	SPEEDV3.elf
+  13464	     36	   1764	  15264	   3ba0	SPEEDV3.elf
 Finished building: default.size.stdout
  
 Finished building: SPEEDV3.list
  
-21:41:59 **** Incremental Build of configuration Debug for project SPEEDV3 ****
-make -j16 all 
+15:38:22 **** Incremental Build of configuration Debug for project SPEEDV3 ****
+make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "SPEEDV3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\LENOVO\Desktop\Robocon\SPEEDV3\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPEEDV3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+arm-none-eabi-gcc -o "SPEEDV3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\ADMIN\Desktop\Robocon\SPEEDV3\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPEEDV3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: SPEEDV3.elf
  
 arm-none-eabi-size   SPEEDV3.elf 
 arm-none-eabi-objdump -h -S  SPEEDV3.elf  > "SPEEDV3.list"
    text	   data	    bss	    dec	    hex	filename
-  13320	     32	   1768	  15120	   3b10	SPEEDV3.elf
+  13464	     36	   1764	  15264	   3ba0	SPEEDV3.elf
 Finished building: default.size.stdout
  
 Finished building: SPEEDV3.list
  
-21:42:38 **** Incremental Build of configuration Debug for project SPEEDV3 ****
-make -j16 all 
+15:40:05 **** Incremental Build of configuration Debug for project SPEEDV3 ****
+make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "SPEEDV3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\LENOVO\Desktop\Robocon\SPEEDV3\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPEEDV3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+arm-none-eabi-gcc -o "SPEEDV3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\ADMIN\Desktop\Robocon\SPEEDV3\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPEEDV3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: SPEEDV3.elf
  
 arm-none-eabi-size   SPEEDV3.elf 
 arm-none-eabi-objdump -h -S  SPEEDV3.elf  > "SPEEDV3.list"
    text	   data	    bss	    dec	    hex	filename
-  13320	     32	   1768	  15120	   3b10	SPEEDV3.elf
-Finished building: default.size.stdout
- 
-Finished building: SPEEDV3.list
- 
-21:43:45 **** Incremental Build of configuration Debug for project SPEEDV3 ****
-make -j16 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "SPEEDV3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\LENOVO\Desktop\Robocon\SPEEDV3\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPEEDV3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: SPEEDV3.elf
- 
-arm-none-eabi-size   SPEEDV3.elf 
-arm-none-eabi-objdump -h -S  SPEEDV3.elf  > "SPEEDV3.list"
-   text	   data	    bss	    dec	    hex	filename
-  13320	     32	   1768	  15120	   3b10	SPEEDV3.elf
-Finished building: default.size.stdout
- 
-Finished building: SPEEDV3.list
- 
-21:44:24 **** Incremental Build of configuration Debug for project SPEEDV3 ****
-make -j16 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "SPEEDV3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\LENOVO\Desktop\Robocon\SPEEDV3\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPEEDV3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: SPEEDV3.elf
- 
-arm-none-eabi-size   SPEEDV3.elf 
-arm-none-eabi-objdump -h -S  SPEEDV3.elf  > "SPEEDV3.list"
-   text	   data	    bss	    dec	    hex	filename
-  13320	     32	   1768	  15120	   3b10	SPEEDV3.elf
+  13464	     36	   1764	  15264	   3ba0	SPEEDV3.elf
 Finished building: default.size.stdout
  
 Finished building: SPEEDV3.list

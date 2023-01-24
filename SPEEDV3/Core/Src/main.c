@@ -31,7 +31,7 @@ float veloc;
 float v1;
 float v1Filt;
 float v1Prev;
-int vt = 5;
+int vt = -100;
 float e ;
 float eI;
 int u;
@@ -80,20 +80,16 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		if (HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10) == 0) count++;
 		else count--;
 	}
-	//if (count > 12 || count < -12) count = 0;
+	if (count > 12 || count < -12) count = 0;
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	counter = count;
 	pos = counter - precount;
-//	if (dir == 1 && pos > N / 2) pos += N;
-//	if (dir == -1)
-//	{
-//		if (pos < -N / 2) pos -= N;
-//		pos = -pos;
-//	}
+	if (dir == -1 && pos < -6.5) pos += N;
+	if (dir == 1 && pos > 6.5) pos -= N;
 	veloc = pos / 0.002;
-	v1 = (veloc) / (650) * 60;
+	v1 = veloc / (650) * 60;
 	v1Filt = 0.854 * v1Filt + 0.0728 * v1 + 0.0728 * v1Prev;
 	v1Prev = v1;
 	precount = counter;
