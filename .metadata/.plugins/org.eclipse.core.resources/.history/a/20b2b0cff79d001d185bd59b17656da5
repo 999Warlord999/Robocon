@@ -98,7 +98,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 void calculateSpeedPID ()
 {
 	e = vt - v1Filt;
-	eI += e * 0.002;
+	eI +=e * 0.002;
 //	if (eI>80000){
 //			eI = 80000;
 //		}
