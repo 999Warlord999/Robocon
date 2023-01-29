@@ -86,8 +86,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	counter = count;
 	pos = counter - precount;
-	if (dir == -1 && pos < -6.5) pos += N;
-	if (dir == 1 && pos > 6.5) pos -= N;
+//	if (dir == -1 && pos < -6.5) pos += N;
+//	if (dir == 1 && pos > 6.5) pos -= N;
 	veloc = pos / 0.002;
 	v1 = veloc / (650) * 60;
 	v1Filt = 0.854 * v1Filt + 0.0728 * v1 + 0.0728 * v1Prev;
@@ -112,10 +112,10 @@ void calculateSpeedPID ()
 	pwr = abs(u);
 	if(pwr > 100) pwr = 100;
 }
-void ControlMotor(int ChannelA, int ChannelB){
-	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_3, 100-ChannelA);
-	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, 100-ChannelB);
-}
+//void ControlMotor(int ChannelA, int ChannelB){
+//	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_3, 100-ChannelA);
+//	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, 100-ChannelB);
+//}
 
 void setMotor(int dir , int pwmVal){
 //	pwmVal = 100-pwmVal;
