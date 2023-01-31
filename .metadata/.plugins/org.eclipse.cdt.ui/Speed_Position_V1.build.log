@@ -1,4 +1,4 @@
-16:34:19 **** Incremental Build of configuration Debug for project Speed_Position_V1 ****
+22:51:34 **** Build of configuration Debug for project Speed_Position_V1 ****
 make -j16 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3 -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
 arm-none-eabi-gcc -o "Speed_Position_V1.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\LENOVO\Desktop\Robocon\Speed_Position_V1\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Speed_Position_V1.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
@@ -7,11 +7,11 @@ Finished building target: Speed_Position_V1.elf
 arm-none-eabi-size   Speed_Position_V1.elf 
 arm-none-eabi-objdump -h -S  Speed_Position_V1.elf  > "Speed_Position_V1.list"
    text	   data	    bss	    dec	    hex	filename
-  19996	     52	   5876	  25924	   6544	Speed_Position_V1.elf
+  23084	     44	   5964	  29092	   71a4	Speed_Position_V1.elf
 Finished building: default.size.stdout
  
 Finished building: Speed_Position_V1.list
  
 
-16:34:20 Build Finished. 0 errors, 0 warnings. (took 446ms)
+22:51:35 Build Finished. 0 errors, 0 warnings. (took 1s.988ms)
 

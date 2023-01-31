@@ -33,7 +33,7 @@ float veloc;
 float v1;
 float v1Filt;
 float v1Prev;
-int vt = -50;
+int vt = 0;
 float e1 ;
 float ei1;
 int u1;
@@ -42,13 +42,16 @@ float ki1 = 0.05;
 int dir;
 int pwr;
 
+uint8_t data_RX[10];
+char c;
+
 //POS_STEP_MOTOR:
 int u2;
 int e2;
 int pre_e2;
 float ei2;
 float ed2;
-int t = 80;
+int t = 0;
 float kp2 = 1,ki2 = 0.05,kd2 = 0;
 int count2;
 
@@ -72,6 +75,8 @@ int count2;
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
 
+UART_HandleTypeDef huart1;
+
 osThreadId Task_speedHandle;
 osThreadId Task_posHandle;
 /* USER CODE BEGIN PV */
@@ -83,6 +88,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_TIM3_Init(void);
+static void MX_USART1_UART_Init(void);
 void Start_task_speed(void const * argument);
 void Start_task_pos(void const * argument);
 
@@ -125,10 +131,12 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM2_Init();
   MX_TIM3_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_3);
   HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_4);
   HAL_TIM_Base_Start_IT(&htim3);
+  HAL_UART_Receive_IT(&huart1, data_RX, 1);
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -298,7 +306,7 @@ static void MX_TIM3_Init(void)
   htim3.Instance = TIM3;
   htim3.Init.Prescaler = 72-1;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 1000-1;
+  htim3.Init.Period = 2000-1;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
@@ -319,6 +327,39 @@ static void MX_TIM3_Init(void)
   /* USER CODE BEGIN TIM3_Init 2 */
 
   /* USER CODE END TIM3_Init 2 */
+
+}
+
+/**
+  * @brief USART1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART1_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART1_Init 0 */
+
+  /* USER CODE END USART1_Init 0 */
+
+  /* USER CODE BEGIN USART1_Init 1 */
+
+  /* USER CODE END USART1_Init 1 */
+  huart1.Instance = USART1;
+  huart1.Init.BaudRate = 115200;
+  huart1.Init.WordLength = UART_WORDLENGTH_8B;
+  huart1.Init.StopBits = UART_STOPBITS_1;
+  huart1.Init.Parity = UART_PARITY_NONE;
+  huart1.Init.Mode = UART_MODE_TX_RX;
+  huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART1_Init 2 */
+
+  /* USER CODE END USART1_Init 2 */
 
 }
 
@@ -385,7 +426,24 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+	HAL_UART_Receive_IT(&huart1, data_RX, 1);
+}
 void Drive(){
+	c = data_RX[0];
+		switch(c){
+		case 'a':
+			t = 0;
+			break;
+		case 'b':
+			t = 20;
+			break;
+		case 'c':
+			t = 40;
+		default:
+			break;
+		}
 	if (u2>0){
 		HAL_GPIO_WritePin(STEP_DIR_GPIO_Port, STEP_DIR_Pin, 1);
 	}
@@ -434,7 +492,19 @@ void setMotor(int dir , int pwmVal){
 	}
 }
 void PID_SPEED ()
-{
+{	c = data_RX[0];
+	switch(c){
+	case '1':
+		vt = 100;
+		break;
+	case '2':
+		vt = 50;
+		break;
+	case '0':
+		vt = 0;
+	default:
+		break;
+	}
 	e1 = vt - v1Filt;
 	ei1 += e1 * 0.001;
 	u1 = kp1 * e1 + ki1 * ei1;
