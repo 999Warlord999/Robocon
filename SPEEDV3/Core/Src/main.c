@@ -86,8 +86,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	counter = count;
 	pos = counter - precount;
-//	if (dir == -1 && pos < -6.5) pos += N;
-//	if (dir == 1 && pos > 6.5) pos -= N;
+	if (dir == -1 && pos < -6.5) pos += N;
+	if (dir == 1 && pos > 6.5) pos -= N;
 	veloc = pos / 0.002;
 	v1 = veloc / (650) * 60;
 	v1Filt = 0.854 * v1Filt + 0.0728 * v1 + 0.0728 * v1Prev;
