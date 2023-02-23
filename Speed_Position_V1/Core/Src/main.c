@@ -25,7 +25,7 @@
 #include <stdlib.h>
 //SPEED_DC_MOTOR:
 volatile int  count1;
-long counter;
+long counter1;
 long pos1 ;
 float N = 13;
 long precount;
@@ -54,6 +54,7 @@ float ed2;
 int t = 0;
 float kp2 = 1,ki2 = 0.05,kd2 = 0;
 int count2;
+long counter2;
 
 /* USER CODE END Includes */
 
@@ -430,26 +431,18 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	HAL_UART_Receive_IT(&huart1, data_RX, 1);
 }
-void Drive(){
-	c = data_RX[0];
-		switch(c){
-		case 'a':
-			t = 0;
-			break;
-		case 'b':
-			t = 20;
-			break;
-		case 'c':
-			t = 40;
-		default:
-			break;
-		}
+
+void drivePosition(){
+
+	//DIR for STEP_POS
 	if (u2>0){
 		HAL_GPIO_WritePin(STEP_DIR_GPIO_Port, STEP_DIR_Pin, 1);
 	}
 	else if (u2<0){
 		HAL_GPIO_WritePin(STEP_DIR_GPIO_Port, STEP_DIR_Pin, 0);
 	}
+
+	//PWM for STEP_POS
 	if(u2!=0){
 		HAL_GPIO_WritePin(STEP_GPIO_Port, STEP_Pin, 1);
 		osDelay(1);
@@ -466,18 +459,21 @@ void Drive(){
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
+	//Encoder DC-SPEED
 	if (GPIO_Pin == ENC_DC1_Pin){
 		if (HAL_GPIO_ReadPin(ENC_DC2_GPIO_Port,ENC_DC2_Pin) == 0) count1++;
 		else count1--;
 	}
 	if (count1 > 12 || count1 < -12) count1 = 0;
 
+	//Encoder STEP-POSITION
 	if (GPIO_Pin == ENC_STP2_Pin){
 		if (HAL_GPIO_ReadPin(ENC_STP1_GPIO_Port,ENC_STP1_Pin) == 0) count2++;
 		else count2--;
 	}
 }
-void setMotor(int dir , int pwmVal){
+
+void driveSpeed(int dir , int pwmVal){
 	if (dir == -1){
 		__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_3, pwmVal);
 		__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, 0);
@@ -491,8 +487,10 @@ void setMotor(int dir , int pwmVal){
 		__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, 0);
 	}
 }
-void PID_SPEED ()
-{	c = data_RX[0];
+
+void calculatePIDSpeed ()
+{
+	c = data_RX[0];
 	switch(c){
 	case '1':
 		vt = 100;
@@ -505,6 +503,8 @@ void PID_SPEED ()
 	default:
 		break;
 	}
+
+	//PID algorithm for DC-SPEED
 	e1 = vt - v1Filt;
 	ei1 += e1 * 0.001;
 	u1 = kp1 * e1 + ki1 * ei1;
@@ -513,6 +513,34 @@ void PID_SPEED ()
 	else dir = -1;
 	pwr = abs(u1);
 	if(pwr > 100) pwr = 100;
+}
+
+void calculatePIDPosition ()
+{
+	c = data_RX[0];
+	switch(c){
+	case 'a':
+		t = 0;
+		break;
+	case 'b':
+		t = 20;
+		break;
+	case 'c':
+		t = 40;
+	default:
+		break;
+	}
+
+	e2 = t - counter2;
+	ei2 += e2*0.001;
+	ed2 = (e2-pre_e2)/0.001;
+	if (ei2>0.09){
+		ei2 = 0.09;
+	}
+	u2 = kp2*e2 + ki2*ei2 + kd2*ed2;
+	pre_e2 = e2;
+
+
 }
 /* USER CODE END 4 */
 
@@ -529,8 +557,8 @@ void Start_task_speed(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-	  PID_SPEED();
-	  setMotor(dir, pwr);
+	  calculatePIDSpeed();
+	  driveSpeed(dir, pwr);
   }
   /* USER CODE END 5 */
 }
@@ -548,7 +576,8 @@ void Start_task_pos(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    Drive();
+	  calculatePIDPosition();
+	  drivePosition();
   }
   /* USER CODE END Start_task_pos */
 }
@@ -566,28 +595,24 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE BEGIN Callback 0 */
 
   /* USER CODE END Callback 0 */
-  if (htim->Instance == TIM4) {
-    HAL_IncTick();
-  }
+	if (htim->Instance == TIM4) {
+		HAL_IncTick();
+	}
   /* USER CODE BEGIN Callback 1 */
-	counter = count1;
-	pos1 = counter - precount;
+
+	//Calculate speed - update counter1 for speed PID in deltaT = 1ms
+	counter1 = count1;
+	pos1 = counter1 - precount;
 	if (dir == -1 && pos1 < -6.5) pos1 += N;
 	if (dir == 1 && pos1 > 6.5) pos1 -= N;
 	veloc = pos1 / 0.001;
 	v1 = veloc / (650) * 60;
 	v1Filt = 0.854 * v1Filt + 0.0728 * v1 + 0.0728 * v1Prev;
 	v1Prev = v1;
-	precount = counter;
+	precount = counter1;
 
-	e2 = t - count2;
-	ei2 += e2*0.001;
-	ed2 = (e2-pre_e2)/0.001;
-	if (ei2>0.09){
-		ei2 = 0.09;
-	}
-	u2 = kp2*e2 + ki2*ei2 + kd2*ed2;
-	pre_e2 = e2;
+	//Calculate position - update counter2 for position PID in deltaT = 1ms
+	counter2 = count2;
 
   /* USER CODE END Callback 1 */
 }

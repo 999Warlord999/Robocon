@@ -64,8 +64,8 @@ all: main-build
 main-build: Speed_Position_V1.elf secondary-outputs
 
 # Tool invocations
-Speed_Position_V1.elf Speed_Position_V1.map: $(OBJS) $(USER_OBJS) C:\Users\LENOVO\Desktop\Robocon\Speed_Position_V1\STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Speed_Position_V1.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\LENOVO\Desktop\Robocon\Speed_Position_V1\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Speed_Position_V1.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Speed_Position_V1.elf Speed_Position_V1.map: $(OBJS) $(USER_OBJS) C:\Users\Admin\Desktop\Robocon\Speed_Position_V1\STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Speed_Position_V1.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\Admin\Desktop\Robocon\Speed_Position_V1\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Speed_Position_V1.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
