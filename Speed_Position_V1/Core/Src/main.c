@@ -27,21 +27,23 @@
 volatile int  count1;
 long counter1;
 long pos1 ;
-float N = 13;
+float N = 100;
 long precount;
 float veloc;
 float v1;
 float v1Filt;
 float v1Prev;
-int vt = 0;
+int vt = 500;
 float e1 ;
 float ei1;
 int u1;
 float kp1 = 1;
-float ki1 = 0.05;
+float ki1 = 0.5;
 int dir;
 int pwr;
 
+
+float vshow;
 uint8_t data_RX[10];
 char c;
 
@@ -51,8 +53,8 @@ int e2;
 int pre_e2;
 float ei2;
 float ed2;
-int t = 0;
-float kp2 = 1,ki2 = 0.05,kd2 = 0;
+int t = 200;
+float kp2 = 1,ki2 = 0.005,kd2 = 0;
 int count2;
 long counter2;
 
@@ -245,7 +247,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 72-1;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 100-1;
+  htim2.Init.Period = 1000-1;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -307,7 +309,7 @@ static void MX_TIM3_Init(void)
   htim3.Instance = TIM3;
   htim3.Init.Prescaler = 72-1;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 2000-1;
+  htim3.Init.Period = 1000-1;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
@@ -436,10 +438,10 @@ void drivePosition(){
 
 	//DIR for STEP_POS
 	if (u2>0){
-		HAL_GPIO_WritePin(STEP_DIR_GPIO_Port, STEP_DIR_Pin, 1);
+		HAL_GPIO_WritePin(STEP_DIR_GPIO_Port, STEP_DIR_Pin, 0);
 	}
 	else if (u2<0){
-		HAL_GPIO_WritePin(STEP_DIR_GPIO_Port, STEP_DIR_Pin, 0);
+		HAL_GPIO_WritePin(STEP_DIR_GPIO_Port, STEP_DIR_Pin, 1);
 	}
 
 	//PWM for STEP_POS
@@ -464,7 +466,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		if (HAL_GPIO_ReadPin(ENC_DC2_GPIO_Port,ENC_DC2_Pin) == 0) count1++;
 		else count1--;
 	}
-	if (count1 > 12 || count1 < -12) count1 = 0;
+	//if (count1 > 99 || count1 < -99) count1 = 0;
 
 	//Encoder STEP-POSITION
 	if (GPIO_Pin == ENC_STP2_Pin){
@@ -490,19 +492,6 @@ void driveSpeed(int dir , int pwmVal){
 
 void calculatePIDSpeed ()
 {
-	c = data_RX[0];
-	switch(c){
-	case '1':
-		vt = 100;
-		break;
-	case '2':
-		vt = 50;
-		break;
-	case '0':
-		vt = 0;
-	default:
-		break;
-	}
 
 	//PID algorithm for DC-SPEED
 	e1 = vt - v1Filt;
@@ -512,31 +501,21 @@ void calculatePIDSpeed ()
 	if(u1 < 0) dir = 1;
 	else dir = -1;
 	pwr = abs(u1);
-	if(pwr > 100) pwr = 100;
+//	if (ei1>100){
+//		ei1 = 100;
+//	}
+	if(pwr > 1000) pwr = 1000;
 }
 
 void calculatePIDPosition ()
 {
-	c = data_RX[0];
-	switch(c){
-	case 'a':
-		t = 0;
-		break;
-	case 'b':
-		t = 20;
-		break;
-	case 'c':
-		t = 40;
-	default:
-		break;
-	}
 
 	e2 = t - counter2;
 	ei2 += e2*0.001;
 	ed2 = (e2-pre_e2)/0.001;
 	if (ei2>0.09){
 		ei2 = 0.09;
-	}
+	}else if (ei2<-0.09) ei2=-0.09;
 	u2 = kp2*e2 + ki2*ei2 + kd2*ed2;
 	pre_e2 = e2;
 
@@ -558,7 +537,8 @@ void Start_task_speed(void const * argument)
   for(;;)
   {
 	  calculatePIDSpeed();
-	  driveSpeed(dir, pwr);
+	  driveSpeed(-dir, pwr);
+	  osDelay(1);
   }
   /* USER CODE END 5 */
 }
@@ -569,6 +549,7 @@ void Start_task_speed(void const * argument)
 * @param argument: Not used
 * @retval None
 */
+int i;
 /* USER CODE END Header_Start_task_pos */
 void Start_task_pos(void const * argument)
 {
@@ -576,8 +557,17 @@ void Start_task_pos(void const * argument)
   /* Infinite loop */
   for(;;)
   {
+//	  HAL_GPIO_WritePin(STEP_GPIO_Port, STEP_Pin, 0);
+//	  osDelay(1);
+//	  HAL_GPIO_WritePin(STEP_GPIO_Port, STEP_Pin, 1);
+//	  osDelay(1);
+//	  i++;
 	  calculatePIDPosition();
 	  drivePosition();
+//	  while(i == 100){
+//		  osDelay(1);
+//	  }
+//	  osDelay(1);
   }
   /* USER CODE END Start_task_pos */
 }
@@ -590,6 +580,8 @@ void Start_task_pos(void const * argument)
   * @param  htim : TIM handle
   * @retval None
   */
+
+float v1real,v1Filtreal,v1Prevreal,velocreal;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
@@ -603,12 +595,17 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	//Calculate speed - update counter1 for speed PID in deltaT = 1ms
 	counter1 = count1;
 	pos1 = counter1 - precount;
-	if (dir == -1 && pos1 < -6.5) pos1 += N;
-	if (dir == 1 && pos1 > 6.5) pos1 -= N;
+//	if (dir == -1 && pos1 < -50) pos1 += N;
+//	if (dir == 1 && pos1 > 50) pos1 -= N;
 	veloc = pos1 / 0.001;
-	v1 = veloc / (650) * 60;
+	velocreal = pos1/0.001;
+
+	v1 = (veloc / (500)) * 60;
+	v1real = velocreal / (100) * 60;
 	v1Filt = 0.854 * v1Filt + 0.0728 * v1 + 0.0728 * v1Prev;
+	v1Filtreal = 0.854*v1Filtreal + 0.0728*v1real+0.0728*v1Prevreal;
 	v1Prev = v1;
+	v1Prevreal = v1real;
 	precount = counter1;
 
 	//Calculate position - update counter2 for position PID in deltaT = 1ms

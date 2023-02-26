@@ -1,0 +1,10 @@
+01:06:07 **** Incremental Build of configuration Debug for project brushless ****
+make -j16 all 
+arm-none-eabi-size   brushless.elf 
+   text	   data	    bss	    dec	    hex	filename
+  24244	     28	   8388	  32660	   7f94	brushless.elf
+Finished building: default.size.stdout
+ 
+
+01:06:07 Build Finished. 0 errors, 0 warnings. (took 163ms)
+
